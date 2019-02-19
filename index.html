@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>DMX autodetect</title>
+        <script type="text/javascript" src="src/color.js"></script>
+        <script type="text/javascript" src="src/autoDetect.js"></script>
+        <script type="text/javascript" src="src/buttons.js"></script>
+        <script type="text/javascript" src="src/lamp.js"></script>
+        <script type="text/javascript" src="src/init.js"></script>
+    </head>
+    <body onload="init();">
+        <button onclick = "buttons.off()" >Off</button>
+        <br>
+        <button onclick = "buttons.red()" >Red</button>
+        <button onclick = "buttons.green()" >Green</button>
+        <button onclick = "buttons.blue()" >Blue</button>
+        <br>
+        <button onclick = "buttons.yellow()" >Yellow</button>
+        <button onclick = "buttons.cyan()" >Cyan</button>
+        <button onclick = "buttons.magenta()" >Magenta</button>
+        <button onclick = "buttons.white()" >White</button>
+        
+        <div id="color" x-size ="100">XXX</div>
+        <div id="c0" x-size ="100">0</div>
+        <div id="c1" x-size ="100">1</div>
+        <div id="c2" x-size ="100">2</div>
+        <div id="c3" x-size ="100">3</div>
+    </body>
+</html>
