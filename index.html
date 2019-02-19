@@ -4,10 +4,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>DMX autodetect</title>
+        <script type="text/javascript" src="src/dmx.js"></script>
         <script type="text/javascript" src="src/color.js"></script>
         <script type="text/javascript" src="src/autoDetect.js"></script>
         <script type="text/javascript" src="src/buttons.js"></script>
         <script type="text/javascript" src="src/lamp.js"></script>
+        <script type="text/javascript" src="src/ui.js"></script>
         <script type="text/javascript" src="src/init.js"></script>
     </head>
     <body onload="init();">
@@ -22,6 +24,10 @@
         <button onclick = "buttons.magenta()" >Magenta</button>
         <button onclick = "buttons.white()" >White</button>
         
+        <div id="dmx"></div>
+        <div id="lamp"></div>
+
+        <h1>-</h1>
         <div id="color" x-size ="100">XXX</div>
         <div id="c0" x-size ="100">0</div>
         <div id="c1" x-size ="100">1</div>
