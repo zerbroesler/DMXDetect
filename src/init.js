@@ -2,27 +2,25 @@
 
 	event = new Event();
 	var ui = new Ui();
-	var dmx = new Dmx();
 	var lamp = new Lamp(['Value','R','G','B']);
 	var guessed = new Guessed();
-	buttons = new Buttons(guessed,dmx);
-	dmx.setValue(3,222);
+	buttons = new Buttons(guessed);
 	
-	var rerender = function(event){
+	var update = function(event){
 		if(event==='rerender'){
-			ui.renderElement('dmx',dmx.render(10));
 			ui.renderElement('lamp',lamp.render());
 			ui.renderElement('guessed',guessed.render());
 		}
 	}
 	var nextGuess = function(event){
 		if(event === 'nextGuess'){
-			guessed.nextGuess(dmx);
+			guessed.nextGuess();
 		}
 	}
-
-	event.attach(rerender);
+	
+	event.attach(update);
 	event.attach(nextGuess);
+	update('rerender');
 
 	// 	var lamp = new Lamp(['Value','R','G','B']);
 // //var lamp = new Lamp(['R','G','B']);

@@ -19,4 +19,7 @@ QUnit.test( "render returns something", function( assert ) {
        dmx.setValue(1,255);
         guessed.addGuess(dmx);
         assert.equal( guessed.getUnguessedChannel(),2);
-  });   
+  });
+  QUnit.test( "nextGuess...", function( assert ) {
+    assert.ok( guessed.nextGuess());
+  });

@@ -2,6 +2,7 @@ Guessed = function(){
 
     var numberOfChannels = 0;
     var guessData = [];
+    var dmx = new Dmx();
 
     function render(){
         var html = new Dmx().renderHeading(numberOfChannels);
@@ -9,7 +10,6 @@ Guessed = function(){
         html = html.slice(0,-5); // Remove </tr>
         html += '<th>Color</th></tr>';
         guessData.forEach(function(guessElement){
-//            for (var guessIndex = 0;guessIndex < guessData.length; guessIndex++){
             html += guessElement.dmx.renderData(numberOfChannels);
             html = html.slice(0,-5); // Remove </tr>
             color = guessElement.color.getColor();
@@ -18,11 +18,11 @@ Guessed = function(){
         html += '</table>';
         return html;
     }
-    function addGuess(dmx,color){
+    function addGuess(color){
         numberOfChannels = Math.max(dmx.getMaxChannel(),numberOfChannels);
         var guessIndex = guessData.length;
         guessData[guessIndex] = {
-            dmx : dmx,
+            dmx : dmx.clone(),
             color : color
         }
     }
@@ -38,10 +38,16 @@ Guessed = function(){
         }
         return 0;
     }
+    function nextGuess(){
+        var unguessed = getUnguessedChannel();
+        dmx.setValue(unguessed,255);
+        return true;
+    }
     return{
         render : render,
         addGuess : addGuess,
-        getUnguessedChannel : getUnguessedChannel
+        getUnguessedChannel : getUnguessedChannel,
+        nextGuess : nextGuess,
     }
 
 }

@@ -1,4 +1,4 @@
-function Buttons(guessed,dmx){
+function Buttons(guessed){
 
 	this.off = function(){
 		this.set(0,0,0);
@@ -26,7 +26,7 @@ function Buttons(guessed,dmx){
 	};
 	this.set = function(r,g,b){
 		var color = new Color(r*255,g*255,b*255);
-		guessed.addGuess(dmx,color);
+		guessed.addGuess(color);
 		event.notify('rerender');
 		event.notify('nextGuess');
 		//var channelNo = autodetect.getChannelNo();

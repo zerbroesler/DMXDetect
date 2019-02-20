@@ -25,7 +25,7 @@ var Dmx = function(){
         channelValues[channelNo]++;
     };
     function getMaxChannel(){
-        var maxChannel;
+        var maxChannel=0;
         for(var channelNo = 1;channelNo<=512;channelNo++){
             if(channelValues[channelNo] !== 0){
                 maxChannel = channelNo;
