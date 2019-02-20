@@ -45,10 +45,14 @@ var Lamp = function(channelMap){
         
         return dmxHtml + '<br>' + html;
     };
+    setDmx = function(dmxIn){
+        dmx = dmxIn;
+    };
 
     return {
         render : render,
         setChannelValue : setChannelValue,
         getColor : getColor,
+        setDmx : setDmx,
     };
 };

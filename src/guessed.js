@@ -1,19 +1,24 @@
 Guessed = function(){
-
+    
     var numberOfChannels = 0;
-    var guessData = [];
+    var guessData = []; // {dmx:dmx,color:color,possibilites}
     var dmx = new Dmx();
+    
+    function setDmx(dmxIn){
+        dmx = dmxIn;
+    }
 
     function render(){
         var html = new Dmx().renderHeading(numberOfChannels);
         var color;
-        html = html.slice(0,-5); // Remove </tr>
+        html = html.slice(0,-6); // Remove </tr>
         html += '<th>Color</th></tr>';
         guessData.forEach(function(guessElement){
             html += guessElement.dmx.renderData(numberOfChannels);
-            html = html.slice(0,-5); // Remove </tr>
+            html = html.slice(0,-6); // Remove </tr>
             color = guessElement.color.getColor();
-            html += '<td style = "width: 50px; background-color : rgb('+(color.r)+','+(color.g)+","+(color.b)+');"> </td></tr>';
+            html += '<td style = "width: 50px; background-color : rgb('+(color.r)+','+(color.g)+","+(color.b)+');"> </td>';
+            html += '<tr>'
         });
         html += '</table>';
         return html;
@@ -23,9 +28,20 @@ Guessed = function(){
         var guessIndex = guessData.length;
         guessData[guessIndex] = {
             dmx : dmx.clone(),
-            color : color
-        }
+            color : color,
+        };
+        var possibilites = calculatePossibilites();
+        guessData[guessIndex].possibilites = possibilites.possibilites;
+        guessData[guessIndex].sure = possibilites.sure;
     }
+    function calculatePossibilites(){
+        var possibilites = [];
+        return {
+            sure : false,
+            possibilites : possibilites,
+        };
+    }
+
     function getUnguessedChannel(){
         var countDmx = new Dmx();
         guessData.forEach(function(guessElement){
@@ -41,13 +57,15 @@ Guessed = function(){
     function nextGuess(){
         var unguessed = getUnguessedChannel();
         dmx.setValue(unguessed,255);
-        return true;
+        return dmx;
     }
     return{
+        setDmx : setDmx,
         render : render,
         addGuess : addGuess,
         getUnguessedChannel : getUnguessedChannel,
         nextGuess : nextGuess,
+        calculatePossibilites : calculatePossibilites,
     }
 
 }

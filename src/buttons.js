@@ -27,13 +27,8 @@ function Buttons(guessed){
 	this.set = function(r,g,b){
 		var color = new Color(r*255,g*255,b*255);
 		guessed.addGuess(color);
-		event.notify('rerender');
 		event.notify('nextGuess');
-		//var channelNo = autodetect.getChannelNo();
-		// color = autodetect.setChannelAttribute(color);
-		// lamp.setElementColor("c"+channelNo,color);
-		// autodetect.autodetect();
-		// lamp.setColor();
+		event.notify('rerender');
 	}
 	
 

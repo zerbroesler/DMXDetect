@@ -41,8 +41,8 @@ QUnit.test( "render returns something", function( assert ) {
     assert.equal(dmxClone.getValue(77),1);
     assert.equal(dmxClone.getValue(512),33);
   });
-  QUnit.test( "getMaxChannel returns maximum channel 0 for empty dmx", function( assert ) {
-    assert.equal(dmx.getMaxChannel(),0);
+  QUnit.test( "getMaxChannel returns maximum channel 1 for empty dmx", function( assert ) {
+    assert.equal(dmx.getMaxChannel(),1);
   });
     QUnit.test( "getMaxChannel returns maximum channel with value", function( assert ) {
     dmx.setValue(77,1);

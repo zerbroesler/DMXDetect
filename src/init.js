@@ -14,7 +14,8 @@
 	}
 	var nextGuess = function(event){
 		if(event === 'nextGuess'){
-			guessed.nextGuess();
+			var dmx = guessed.nextGuess();
+			lamp.setDmx(dmx);
 		}
 	}
 	
