@@ -44,4 +44,21 @@ QUnit.test( "render returns something", function( assert ) {
   QUnit.test( "getMaxChannel returns maximum channel with value", function( assert ) {
     dmx.setValue(77,1);
   assert.equal(dmx.getMaxChannel(),77);
-});
+  });
+  QUnit.test( "increaseValue increase value of channel", function( assert ) {
+    dmx.setValue(2,2);
+    dmx.increaseValue(1);
+    dmx.increaseValue(2);
+    assert.equal(dmx.getValue(1),1);
+    assert.equal(dmx.getValue(2),3);
+    assert.equal(dmx.getValue(3),0);
+  });
+  QUnit.test( "count counts the channels which are not a value (0)", function( assert ) {
+      var countDmx = new Dmx();
+      dmx.setValue(2,2);
+      dmx.count(countDmx)
+      assert.equal(countDmx.getValue(1),0);
+      assert.equal(countDmx.getValue(2),1);
+  });
+
+

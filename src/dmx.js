@@ -12,6 +12,18 @@ var Dmx = function(){
         }
         return clonedDmx;
     }
+    function count(countDmx){
+        for(var channelNo = 1;channelNo<=512;channelNo++){
+            if(getValue(channelNo)!==0){
+                countDmx.increaseValue(channelNo);
+            }
+        }
+    }
+    function increaseValue(channelNo){
+        checkChannelNo(channelNo);
+        checkValueRange(channelValues[channelNo] + 1);
+        channelValues[channelNo]++;
+    };
     function getMaxChannel(){
         var maxChannel;
         for(var channelNo = 1;channelNo<=512;channelNo++){
@@ -57,7 +69,7 @@ var Dmx = function(){
     }
 
     function checkChannelNo(channelNo){
-        if((channelNo <1) || (channelNo >512)){
+        if((channelNo <1) || (channelNo >512) || (channelNo === undefined)){
             throw 'Channelnumber invalid';
         }
     }
@@ -70,6 +82,8 @@ var Dmx = function(){
     return {
         clone : clone,
         getMaxChannel : getMaxChannel,
+        count : count,
+        increaseValue : increaseValue,
         render : render,
         renderHeading : renderHeading,
         renderData : renderData,
