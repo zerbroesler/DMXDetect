@@ -1,3 +1,4 @@
+QUnit.module("Lamp");
 var lamp;
 
 function lampSimple(){

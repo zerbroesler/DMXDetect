@@ -3,22 +3,6 @@ var Lamp = function(channelMap){
     var dmx = new Dmx();
     var NumberOfChannels = channelMap.length;
 
-    // if(channelMap.includes('Value')){
-    //     color.setValue(0);
-    // }else{
-    //     color.setValue(255);
-    // }
-    
-	// this.setColor = function(){
-	// 	this.setElementColor("color",color);
-	// }
-
-	// this.setElementColor = function(elementName,color){
-	// 	var element = document.getElementById(elementName);
-	// 	var values = color.getColor();
-	// 	element.setAttribute("style",'background-color : rgb('+(values.r)+','+(values.g)+","+(values.b));
-	// }
-
     setChannelValue = function(channel,value){
         dmx.setValue(channel,value);
     };
@@ -48,15 +32,18 @@ var Lamp = function(channelMap){
         return color;
     };
     function render(){
-        var dmxhtml = dmx.render(NumberOfChannels);
-        var re = RegExp('^(.+)(<\/table>)$','s');
-        var withoutTableHtml = re.exec(dmxhtml)[1];
+        var dmxHtml = dmx.renderHeading(NumberOfChannels);
+        dmxHtml += dmx.renderData(NumberOfChannels);
+        dmxHtml += '<tr>\n';
         channelMap.forEach(function(attribute){
-            withoutTableHtml +=  '<td>'+attribute+'</td>\n';
+            dmxHtml +=  '<td>'+attribute+'</td>\n';
         });
-        withoutTableHtml += '</tr>\n</table>\n';
-        var html = '<div id="color" x-size ="50px">---</div>';
-        return withoutTableHtml + '<br>' + html;
+        dmxHtml += '</tr>\n</table>\n';
+        var color = getColor().getColor();
+        var html = '<div id="color"  style = "width : 50px; background-color : rgb('+(color.r)+','+(color.g)+","+(color.b)+')"';
+        html+='>---</div>';
+        
+        return dmxHtml + '<br>' + html;
     };
 
     return {

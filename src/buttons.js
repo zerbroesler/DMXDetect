@@ -1,4 +1,4 @@
-function Buttons(autodetect,lamp){
+function Buttons(guessed,dmx){
 
 	this.off = function(){
 		this.set(0,0,0);
@@ -26,12 +26,14 @@ function Buttons(autodetect,lamp){
 	};
 	this.set = function(r,g,b){
 		var color = new Color(r*255,g*255,b*255);
-
-		var channelNo = autodetect.getChannelNo();
-		color = autodetect.setChannelAttribute(color);
-		lamp.setElementColor("c"+channelNo,color);
-		autodetect.autodetect();
-		lamp.setColor();
+		guessed.addGuess(dmx,color);
+		event.notify('rerender');
+		event.notify('nextGuess');
+		//var channelNo = autodetect.getChannelNo();
+		// color = autodetect.setChannelAttribute(color);
+		// lamp.setElementColor("c"+channelNo,color);
+		// autodetect.autodetect();
+		// lamp.setColor();
 	}
 	
 
