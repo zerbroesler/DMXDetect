@@ -1,8 +1,10 @@
 Guessed = function(){
     
     var numberOfChannels = 0;
-    var guessData = []; // {dmx:dmx,color:color,possibilites}
+    var guessData = []; // {dmx:dmx,color:color}
     var dmx = new Dmx();
+    var channels = [];
+    var sure = false;
     
     function setDmx(dmxIn){
         dmx = dmxIn;
@@ -18,8 +20,15 @@ Guessed = function(){
             html = html.slice(0,-6); // Remove </tr>
             color = guessElement.color.getColor();
             html += '<td style = "width: 50px; background-color : rgb('+(color.r)+','+(color.g)+","+(color.b)+');"> </td>';
-            html += '<tr>'
+            html += '</tr>'
         });
+        html += '<tr>'
+        channels.forEach(function(channelGuess){
+            html += '<td>'
+            html += channelGuess;
+            html += '</td>'
+        });
+        html += '</tr>'
         html += '</table>';
         return html;
     }
@@ -31,14 +40,22 @@ Guessed = function(){
             color : color,
         };
         var possibilites = calculatePossibilites();
-        guessData[guessIndex].possibilites = possibilites.possibilites;
-        guessData[guessIndex].sure = possibilites.sure;
+        channels = possibilites.channels;
+        sure = possibilites.sure;
     }
     function calculatePossibilites(){
-        var possibilites = [];
+        channels = [];
+        for (var dmxChannel = 1; dmxChannel <= numberOfChannels; dmxChannel++) {
+            guessData.forEach(function(guessElement){
+                var dmx = guessElement.dmx;
+                var color = guessElement.color;
+                channels[dmxChannel]=color.getColor().r;
+            });
+        };
+
         return {
-            sure : false,
-            possibilites : possibilites,
+            sure : sure,
+            channels : channels,
         };
     }
 
