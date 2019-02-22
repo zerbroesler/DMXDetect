@@ -5,6 +5,8 @@ Guessed = function () {
     var dmx = new Dmx();
     var sure = false;
 	result = new Result();
+	var channelCount = 0;
+	var wasWhite = false;
 
     function setDmx(dmxIn) {
         dmx = dmxIn;
@@ -95,6 +97,25 @@ Guessed = function () {
     	  return Math.floor(Math.random() * Math.floor(max));
     	}
     function getUnguessedChannel() {
+    	if(wasWhite){
+    		if(guessData[guessData.length-1].color.isBlack()){
+    			// find the dim from the data
+    			channelCount = result.findDim();
+    			return result.findDim();
+    		}else{
+        		channelCount++;
+        		return channelCount;
+    		}
+    	}else if(guessData[guessData.length-1].color.isWhite()){
+    		channelCount = 1;
+    		wasWhite = true;
+    		return channelCount;    		
+    	}else{
+    		channelCount++;
+    		return channelCount;
+    	}
+// First switch all channels to on, one after the other    	
+    	
     	return getRandomInt(5)+1;
 //        var countDmx = new Dmx();
 //        guessData.forEach(function (guessElement) {

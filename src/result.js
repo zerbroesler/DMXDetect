@@ -24,11 +24,28 @@ function Result(){
     	}
     	saveIn(data[attributeName],value);
     }
+    function findDim(){
+    	doubles = [];
+    	for(var attributeName in data){
+    	    if (data.hasOwnProperty(attributeName)) {
+    	    	doubles = doubles.concat(data[attributeName]);
+    	    }
+    	}
+    	function onlyUnique(value, index, self) { 
+    	    return self.indexOf(value) !== index;
+    	}
+    	var unique = doubles.filter( onlyUnique )
+    	if(unique.length>0){
+        	return unique[0];
+    	}
+    	return 1;
+    }
     
     return{
         render : render,
         getAttributes : getAttributes, 
-        addAttribute : addAttribute, 
+        addAttribute : addAttribute,
+        findDim : findDim,
     }
 
 }
