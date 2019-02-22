@@ -28,12 +28,12 @@ QUnit.test( "render returns something", function( assert ) {
     var possibilites = guessed.calculatePossibilites();
     assert.equal( possibilites.sure,false);
   });
-  QUnit.test( "Possibilites returns value,r,g,b for black on channel 1", function( assert ) {
-    var dmx = new Dmx();
-    dmx.setValue(1,255);
-    guessed.setDmx(dmx);
-    guessed.addGuess(dmx);
-    var possibilites = guessed.calculatePossibilites();
-    assert.equal( possibilites.sure,false);
-  });
+//  QUnit.test( "Possibilites returns value,r,g,b for black on channel 1", function( assert ) {
+//    var dmx = new Dmx();
+//    dmx.setValue(1,255);
+//    guessed.setDmx(dmx);
+//    guessed.addGuess(dmx);
+////    var possibilites = guessed.calculatePossibilites();
+//    assert.equal( possibilites.sure,false);
+//  });
 

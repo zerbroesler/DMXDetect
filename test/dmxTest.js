@@ -64,4 +64,17 @@ QUnit.test( "render returns something", function( assert ) {
       assert.equal(countDmx.getValue(2),1);
   });
 
+  QUnit.test( "difference sets 1 for any difference between two DMXes", function( assert ) {
+      var differenceDmx;
+      var otherDmx = new Dmx();
+      dmx.setValue(2,2);
+      otherDmx.setValue(5,33);
+      differenceDmx = dmx.difference(otherDmx);
+      assert.equal(differenceDmx.getValue(1),0);
+      assert.equal(differenceDmx.getValue(2),1);
+      assert.equal(differenceDmx.getValue(3),0);
+      assert.equal(differenceDmx.getValue(4),0);
+      assert.equal(differenceDmx.getValue(5),1);
+      assert.equal(differenceDmx.getValue(6),0);
+  });
 
