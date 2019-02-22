@@ -4,7 +4,7 @@ Guessed = function () {
     var guessData = []; // {dmx:dmx,color:color}
     var dmx = new Dmx();
     var sure = false;
-	var result = { r:[],g:[],b:[],v:-1};
+	result = new Result();
 
     function setDmx(dmxIn) {
         dmx = dmxIn;
@@ -25,7 +25,9 @@ Guessed = function () {
         html += '</table>';
         return html;
     }
-//    function renderResults() {
+    function renderResult() {
+    	return result.render();
+    }
 //        var html = new Dmx().renderHeading(numberOfChannels);
 //        var color;
 //        html = html.slice(0, -6); // Remove </tr>
@@ -50,15 +52,10 @@ Guessed = function () {
             color: color,
         };
     }
-    function savein(where,value){
-    	if(!where.find(function(element){
-    		return element === value;
-    	})){
-    		where.push(value);
-    	}
-    }
+
     function calculatePossibilites() {
 
+    	result = new Result();
     	var prevDmx;
     	var prevColor;
     	
@@ -79,10 +76,10 @@ Guessed = function () {
         				b : -1
         		}
         		var max = differenceDmx.getMaxChannel();
-        		if(dcv.r!==0){ guess.r = max; savein(result.r,max) };
-        		if(dcv.g!==0){ guess.g = max; savein(result.g,max) };
-        		if(dcv.b!==0){ guess.b = max; savein(result.b,max) };
-//        		if(dcv.value!==0){ guess.v = max };
+        		if(dcv.r!==0){ guess.r = max; result.addAttribute('r',max) };
+        		if(dcv.g!==0){ guess.g = max; result.addAttribute('g',max) };
+        		if(dcv.b!==0){ guess.b = max; result.addAttribute('b',max) };
+
         		differences.push({dmx: differenceDmx.clone(),color : differenceColor, guess: guess});
         	}
         	prevDmx = guessElement.dmx;
@@ -91,6 +88,7 @@ Guessed = function () {
         
         return {
             sure: sure,
+            result : result,
         };
     }
     function getRandomInt(max) {
@@ -118,6 +116,7 @@ Guessed = function () {
     return {
         setDmx: setDmx,
         render: render,
+        renderResult: renderResult,
         addGuess: addGuess,
         getUnguessedChannel: getUnguessedChannel,
         nextGuess: nextGuess,

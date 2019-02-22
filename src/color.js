@@ -26,7 +26,7 @@ var Color = function(r,g,b){
         }
     };
     this.getColor = function(){
-        result = {};//new Color();
+        var result = {};//new Color();
         result.r = s.r * s.value / 255;
         result.g = s.g * s.value / 255;
         result.b = s.b * s.value / 255;
