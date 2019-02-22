@@ -30,6 +30,15 @@ QUnit.test( "render returns something", function( assert ) {
     assert.equal(dmx.getValue(77),1);
     assert.equal(dmx.getValue(512),37);
   });
+  QUnit.test( "toggle value sets channel to value", function( assert ) {
+	    dmx.toggleValue(1,77);
+	    assert.equal(dmx.getValue(1),77);
+  });
+  QUnit.test( "toggle value resets channel to 0", function( assert ) {
+	    dmx.toggleValue(1,77);
+	    dmx.toggleValue(1,33);
+	    assert.equal(dmx.getValue(1),0);
+  });
   QUnit.test( "clone creates a copy, not reference", function( assert ) {
     dmx.setValue(1,77);
     dmx.setValue(77,1);
