@@ -19,6 +19,15 @@ var Dmx = function(){
             }
         }
     }
+    function getDifferences(otherDmx){
+        var differenceDmx = new Dmx();
+        for(var channelNo = 1;channelNo<=512;channelNo++){
+            if(getValue(channelNo)!==otherDmx.getValue(channelNo)){
+                differenceDmx.setValue(channelNo,1);
+            };
+        };
+        return differenceDmx;
+    }
     function increaseValue(channelNo){
         checkChannelNo(channelNo);
         checkValueRange(channelValues[channelNo] + 1);
@@ -84,6 +93,7 @@ var Dmx = function(){
         getMaxChannel : getMaxChannel,
         count : count,
         increaseValue : increaseValue,
+        getDifferences : getDifferences,
         render : render,
         renderHeading : renderHeading,
         renderData : renderData,

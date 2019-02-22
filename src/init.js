@@ -10,6 +10,7 @@
 		if(event==='rerender'){
 			ui.renderElement('lamp',lamp.render());
 			ui.renderElement('guessed',guessed.render());
+			ui.renderElement('statistic',guessed.renderStatistic());
 		}
 	}
 	var nextGuess = function(event){

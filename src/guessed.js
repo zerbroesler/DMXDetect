@@ -4,6 +4,7 @@ Guessed = function () {
     var guessData = []; // {dmx:dmx,color:color}
     var dmx = new Dmx();
     var channels = [];
+    var rgbInfluence = [];
     var sure = false;
 
     function setDmx(dmxIn) {
@@ -22,13 +23,23 @@ Guessed = function () {
             html += '<td style = "width: 50px; background-color : rgb(' + (color.r) + ',' + (color.g) + "," + (color.b) + ');"> </td>';
             html += '</tr>'
         });
-        html += '<tr>'
-        channels.forEach(function (channelGuess) {
-            html += '<td>'
-            html += channelGuess;
-            html += '</td>'
-        });
+        html += '</table>';
+        return html;
+    }
+
+    function renderStatistic() {    
+        var html = '<table style = "border: 1px solid black"><tr>\n';
+        html += '<th>Red</th>\n';
+        html += '<th>Green</th>\n';
+        html += '<th>Blue</th>\n';
         html += '</tr>'
+        rgbInfluence.forEach(function (rgbI) {
+            html += '<tr>'
+            html += '<td>'+rgbI.r+'</td>';
+            html += '<td>'+rgbI.g+'</td>';
+            html += '<td>'+rgbI.b+'</td>';
+            html += '</tr>'
+        });
         html += '</table>';
         return html;
     }
@@ -76,6 +87,7 @@ Guessed = function () {
     return {
         setDmx: setDmx,
         render: render,
+        renderStatistic : renderStatistic,
         addGuess: addGuess,
         getUnguessedChannel: getUnguessedChannel,
         nextGuess: nextGuess,
