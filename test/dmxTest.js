@@ -90,7 +90,7 @@ QUnit.test( "render returns something", function( assert ) {
       var otherDmx = new Dmx();
       dmx.setValue(2,2);
       otherDmx.setValue(5,33);
-      differenceDmx = dmx.difference(otherDmx);
+      differenceDmx = dmx.getDifferences(otherDmx);
       assert.equal(differenceDmx.getValue(1),0);
       assert.equal(differenceDmx.getValue(2),1);
       assert.equal(differenceDmx.getValue(3),0);
