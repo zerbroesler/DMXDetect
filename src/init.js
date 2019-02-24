@@ -2,7 +2,7 @@
 
 	event = new Event();
 	var ui = new Ui();
-	var lamp = new Lamp(['Value','R','G','B']);
+	var lamp = new Lamp(['X','Value','X','R','G','B']);
 	var guessed = new Guessed();
 	buttons = new Buttons(guessed);
 	

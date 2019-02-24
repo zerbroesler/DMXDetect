@@ -20,12 +20,12 @@ var Dmx = function(){
         }
     }
     function getDifferences(otherDmx){
-        var differenceDmx = new Dmx();
+    	var differenceDmx = new Dmx();
         for(var channelNo = 1;channelNo<=512;channelNo++){
             if(getValue(channelNo)!==otherDmx.getValue(channelNo)){
-                differenceDmx.setValue(channelNo,1);
-            };
-        };
+            	differenceDmx.setValue(channelNo,1);
+            }
+        }
         return differenceDmx;
     }
     function increaseValue(channelNo){
@@ -76,6 +76,15 @@ var Dmx = function(){
         checkValueRange(channelValue);
         channelValues[channelNo]=channelValue;
     }
+    function toggleValue(channelNo,channelValue){
+        checkChannelNo(channelNo);
+        checkValueRange(channelValue);
+        if(getValue(channelNo)===0){
+        	channelValues[channelNo]=channelValue;
+        }else{
+        	channelValues[channelNo]=0;
+        }
+    }
 
     function checkChannelNo(channelNo){
         if((channelNo <1) || (channelNo >512) || (channelNo === undefined)){
@@ -99,5 +108,7 @@ var Dmx = function(){
         renderData : renderData,
         getValue : getValue,
         setValue : setValue,
+        toggleValue : toggleValue,
+        
     }
 }
