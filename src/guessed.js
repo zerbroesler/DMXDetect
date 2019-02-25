@@ -6,8 +6,7 @@ Guessed = function () {
     var sure = false;
 	result = new Result();
 	var channelCount = 0;
-    var wasWhite = false;
-    var rgbInfluence = [];
+	var wasWhite = false;
 
     function setDmx(dmxIn) {
         dmx = dmxIn;
@@ -23,23 +22,6 @@ Guessed = function () {
             html = html.slice(0, -6); // Remove </tr>
             color = guessElement.color.getColor();
             html += '<td style = "width: 50px; background-color : rgb(' + (color.r) + ',' + (color.g) + "," + (color.b) + ');"> </td>';
-            html += '</tr>'
-        });
-        html += '</table>';
-        return html;
-    }
-
-    function renderStatistic() {    
-        var html = '<table style = "border: 1px solid black"><tr>\n';
-        html += '<th>Red</th>\n';
-        html += '<th>Green</th>\n';
-        html += '<th>Blue</th>\n';
-        html += '</tr>'
-        rgbInfluence.forEach(function (rgbI) {
-            html += '<tr>'
-            html += '<td>'+rgbI.r+'</td>';
-            html += '<td>'+rgbI.g+'</td>';
-            html += '<td>'+rgbI.b+'</td>';
             html += '</tr>'
         });
         html += '</table>';
@@ -85,7 +67,7 @@ Guessed = function () {
     	var differences = [];
         guessData.forEach(function (guessElement) {
         	if(prevDmx !== undefined){
-        		differenceDmx = guessElement.dmx.getDifferences(prevDmx);
+        		differenceDmx = guessElement.dmx.difference(prevDmx);
         		differenceColor = guessElement.color.clone();
         		differenceColor.difference(prevColor);
         		differenceColorValues = differenceColor.getColor();
@@ -156,7 +138,6 @@ Guessed = function () {
         setDmx: setDmx,
         render: render,
         renderResult: renderResult,
-        renderStatistic: renderStatistic,
         addGuess: addGuess,
         getUnguessedChannel: getUnguessedChannel,
         nextGuess: nextGuess,
