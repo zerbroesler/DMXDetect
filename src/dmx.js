@@ -88,12 +88,12 @@ var Dmx = function(){
 
     function checkChannelNo(channelNo){
         if((channelNo <1) || (channelNo >512) || (channelNo === undefined)){
-            throw 'Channelnumber invalid';
+            throw 'Channelnumber '+channelNo+' invalid';
         }
     }
     function checkValueRange(value){
         if(value<0 || value >255){
-            throw 'Channelvalue out of range';
+            throw 'Channelvalue '+value+' out of range';
         }
     }
 

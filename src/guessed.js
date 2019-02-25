@@ -4,9 +4,10 @@ Guessed = function () {
     var guessData = []; // {dmx:dmx,color:color}
     var dmx = new Dmx();
     var sure = false;
-	result = new Result();
+    result = new Result();
 	var channelCount = 0;
-	var wasWhite = false;
+    var wasWhite = false;
+    var guessPhase = 0;
 
     function setDmx(dmxIn) {
         dmx = dmxIn;
@@ -28,7 +29,16 @@ Guessed = function () {
         return html;
     }
     function renderResult() {
-    	return result.render();
+        var html = result.render();
+        html += '<br>Dim: ';
+        html += result.findDim();
+        html += '<br>Red: ';
+        html += result.getAttributeChannel('R');
+        html += '<br>Green: ';
+        html += result.getAttributeChannel('G');
+        html += '<br>Blue: ';
+        html += result.getAttributeChannel('B');
+        return html;
     }
 //        var html = new Dmx().renderHeading(numberOfChannels);
 //        var color;
@@ -78,9 +88,9 @@ Guessed = function () {
         				b : -1
         		}
         		var max = differenceDmx.getMaxChannel();
-        		if(dcv.r!==0){ guess.r = max; result.addAttribute('r',max) };
-        		if(dcv.g!==0){ guess.g = max; result.addAttribute('g',max) };
-        		if(dcv.b!==0){ guess.b = max; result.addAttribute('b',max) };
+        		if(dcv.r!==0){ guess.r = max; result.addAttribute('R',max) };
+        		if(dcv.g!==0){ guess.g = max; result.addAttribute('G',max) };
+        		if(dcv.b!==0){ guess.b = max; result.addAttribute('B',max) };
 
         		differences.push({dmx: differenceDmx.clone(),color : differenceColor, guess: guess});
         	}
@@ -97,6 +107,57 @@ Guessed = function () {
     	  return Math.floor(Math.random() * Math.floor(max));
     	}
     function getUnguessedChannel() {
+        // Phases
+        const setLeftToRight = 0;
+        const findDim = 1;
+        const turnOffLeftToRight = 2;
+//        const noDimFound = 3;
+        const random = 4;
+
+        switch(guessPhase){
+            case setLeftToRight :
+                if(guessData[guessData.length-1].color.isWhite()){
+                    channelCount = 1;
+                    guessPhase = findDim;
+                    return channelCount;    		
+                }else{
+                    channelCount++;
+                    return channelCount;
+                }
+            case findDim:
+            // Set channels to 0 from left to right
+                if(guessData[guessData.length-1].color.isBlack()){
+                    // find the dim from the data
+                    dim = result.findDim();
+                    if(dim === -1){
+                        channelCount++                        
+                        return channelCount;
+                    }else{
+                        guessPhase = turnOffLeftToRight;
+                        channelCount = dim;
+                        return channelCount;
+                    }
+                }else{
+                    channelCount++;
+                    return channelCount;
+                }
+            case turnOffLeftToRight:
+                channelCount++;
+                if(channelCount===numberOfChannels){
+                    guessPhase = random;
+                    return -1;
+                }else{
+                    return channelCount;
+                }
+            // case noDimFound:
+            //     guessPhase = random;
+            //     return -1;
+            case random:
+                return getRandomInt(numberOfChannels)+1;
+            default:
+              return -1;
+        }
+
     	if(wasWhite){
     		if(guessData[guessData.length-1].color.isBlack()){
     			// find the dim from the data
@@ -114,22 +175,14 @@ Guessed = function () {
     		channelCount++;
     		return channelCount;
     	}
-// First switch all channels to on, one after the other    	
-    	
-    	return getRandomInt(5)+1;
-//        var countDmx = new Dmx();
-//        guessData.forEach(function (guessElement) {
-//            guessElement.dmx.count(countDmx);
-//        });
-//        for (var dmxChannel = 1; dmxChannel <= 512; dmxChannel++) {
-//            if (countDmx.getValue(dmxChannel) === 0) {
-//                return dmxChannel;
-//            }
-//        }
-//        return 0;
+
     }
     function nextGuess() {
         var unguessed = getUnguessedChannel();
+        if(unguessed === -1){
+            console.log("fatal error");
+            return dmx;
+        }
         dmx.toggleValue(unguessed, 255);
         calculatePossibilites();
         return dmx;

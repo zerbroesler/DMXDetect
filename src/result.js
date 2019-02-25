@@ -3,7 +3,7 @@ function Result(){
 	var data = {};
     function render(){
     	var html = '<p>';
-    	html += JSON.stringify(data);
+		html += JSON.stringify(data);
     	return html;
     }
     function saveIn(where,value){
@@ -24,6 +24,9 @@ function Result(){
     	}
     	saveIn(data[attributeName],value);
     }
+	function onlyUnique(value, index, self) { 
+		return self.indexOf(value) !== index;
+	}
     function findDim(){
     	doubles = [];
     	for(var attributeName in data){
@@ -31,20 +34,40 @@ function Result(){
     	    	doubles = doubles.concat(data[attributeName]);
     	    }
     	}
-    	function onlyUnique(value, index, self) { 
-    	    return self.indexOf(value) !== index;
-    	}
     	var unique = doubles.filter( onlyUnique )
     	if(unique.length>0){
         	return unique[0];
     	}
-    	return 1;
-    }
+    	return -1;
+	}
+	function getAttributeChannel(attributeName){
+		var dim = findDim();
+//		var unique = data[attributeName].filter( onlyUnique );
+		var channels = data[attributeName];
+		if(channels === undefined){
+			return -1;
+		}
+		switch(channels.length){
+			case 1:
+				return channels[0];
+				break;
+			case 2:
+				if(channels[0]===dim){
+					return channels[1];
+				}else{
+					return channels[0];
+				}
+			default:
+				return -1;
+		}
+
+	}
     
     return{
         render : render,
         getAttributes : getAttributes, 
-        addAttribute : addAttribute,
+		addAttribute : addAttribute,
+		getAttributeChannel : getAttributeChannel,
         findDim : findDim,
     }
 

@@ -2,7 +2,7 @@
 
 	event = new Event();
 	var ui = new Ui();
-	var lamp = new Lamp(['X','Value','X','R','G','B']);
+	var lamp = new Lamp(['R','G','B','X','Value','X','R','G','B']);
 	var guessed = new Guessed();
 	buttons = new Buttons(guessed);
 	
@@ -10,7 +10,8 @@
 		if(event==='rerender'){
 			ui.renderElement('lamp',lamp.render());
 			ui.renderElement('guessed',guessed.render());
-			ui.renderElement('result',guessed.renderResult());
+			var html = guessed.renderResult();
+			ui.renderElement('result',html);
 		}
 	}
 	var nextGuess = function(event){
